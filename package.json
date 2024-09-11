@@ -1,12 +1,36 @@
 {
-  "name": "PlayerApi",
+  "name": "player-api",
   "version": "1.0.0",
-  "description": "",
+  "description": "music api, just only use it myself",
+  "type": "module",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node app.js"
   },
   "keywords": [],
-  "author": "",
-  "license": "ISC"
+  "author": "仔仔",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/zz-open/player-api/issues"
+  },
+  "homepage": "https://github.com/zz-open/player-api#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/zz-open/player-api.git"
+  },
+  "dependencies": {
+    "axios": "^1.7.7",
+    "dayjs": "^1.11.13",
+    "koa": "^2.15.3",
+    "koa-bodyparser": "^4.4.1",
+    "koa-logger": "^3.2.1",
+    "koa-router": "^12.0.1"
+  },
+  "engines": {
+    "node": ">=16.0.0"
+  },
+  "devDependencies": {
+    "chalk": "^5.3.0"
+  }
 }
