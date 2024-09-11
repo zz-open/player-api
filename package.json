@@ -6,9 +6,15 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node index.js"
+    "dev": "node index.js",
+    "start": "nodemon index.js"
   },
-  "keywords": [],
+  "keywords": [
+    "QQ音乐",
+    "音乐",
+    "网易云音乐",
+    "koa2"
+  ],
   "author": "仔仔",
   "license": "ISC",
   "bugs": {

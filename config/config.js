@@ -3,7 +3,7 @@ import { merge } from '../common/share/index.js'
 
 const defaultConfig = {
     server: {
-        port: 3000,
+        port: 3678,
     },
     tecent: {
         cookie: '',
