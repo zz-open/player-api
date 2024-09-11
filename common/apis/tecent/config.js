@@ -1,4 +1,4 @@
-import {GLOBAL_CONFIG} from '../../../../config/index.js';
+import {GLOBAL_CONFIG} from '../../../config/index.js';
 
 export const TECENT_MUSIC_WEB_API = 'https://c6.y.qq.com';
 

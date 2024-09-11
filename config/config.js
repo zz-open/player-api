@@ -19,7 +19,7 @@ const defaultConfig = {
 async function mergeConfig() {
     const applicationConf = await readApplicationConf()
     const config = merge({}, defaultConfig, applicationConf)
-    console.log("合并后的全局配置:", config)
+    // console.log("合并后的全局配置:", config)
     return config
 }
 

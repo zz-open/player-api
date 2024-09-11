@@ -1,4 +1,4 @@
-import { sendRequest } from './request/instance.js'
+import { sendRequest } from '../../request/instance.js'
 import {buildUrl} from '../../utils/index.js'
 import {COMMON_PARAMS,COMMON_HEADERS,TECENT_MUSIC_WEB_API} from './config.js'
 
