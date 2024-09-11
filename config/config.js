@@ -1,12 +1,27 @@
-import {readApplicationConf} from '../utils/index.js'
-const config = {
-    port: 3000,
+import { readApplicationConf } from '../common/utils/index.js'
+import { merge } from '../common/share/index.js'
+
+const defaultConfig = {
+    server: {
+        port: 3000,
+    },
+    qq: {
+        cookie: '',
+        loginUin: '',
+        userAgent: 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/127.0.0.0 Safari/537.36'
+    },
+    netease: {
+        cookie: '',
+        userAgent: 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/127.0.0.0 Safari/537.36'
+    }
 }
 
 async function mergeConfig() {
-    readApplicationConf()
+    const applicationConf = await readApplicationConf()
+    const config = merge({}, defaultConfig, applicationConf)
+    console.log("合并后的全局配置:", config)
+    return config
 }
 
-const conf = await mergeConfig()
-
-export {config}
+const config =await mergeConfig()
+export { config }

@@ -1,5 +1,8 @@
+import { queryPlayListSongs } from '../../common/apis/qq/queryPlayListSongs.js'
+
 const handle = async (ctx, next) => {
-	ctx.body = 'qq 查询歌单里的歌曲';
+	const [flag, res] = await queryPlayListSongs()
+	ctx.body = res;
 }
 
 export default handle

@@ -5,6 +5,9 @@ settings:
   excludeLinksFromLockfile: false
 
 dependencies:
+  await-to-js:
+    specifier: ^3.0.0
+    version: 3.0.0
   axios:
     specifier: ^1.7.7
     version: 1.7.7
@@ -23,6 +26,9 @@ dependencies:
   koa-router:
     specifier: ^12.0.1
     version: 12.0.1
+  lodash:
+    specifier: ^4.17.21
+    version: 4.17.21
 
 devDependencies:
   chalk:
@@ -52,6 +58,11 @@ packages:
 
   /asynckit@0.4.0:
     resolution: {integrity: sha512-Oei9OH4tRh0YqU3GxhX79dM/mwVgvbZJaSNaRk+bshkj0S5cfHcgYakreBjrHwatXKbz+IoIdYLxrKim2MjW0Q==}
+    dev: false
+
+  /await-to-js@3.0.0:
+    resolution: {integrity: sha512-zJAaP9zxTcvTHRlejau3ZOY4V7SRpiByf3/dxx2uyKxxor19tpmpV2QRsTKikckwhaPmr2dVpxxMr7jOCYVp5g==}
+    engines: {node: '>=6.0.0'}
     dev: false
 
   /axios@1.7.7:
@@ -459,6 +470,10 @@ packages:
       vary: 1.1.2
     transitivePeerDependencies:
       - supports-color
+    dev: false
+
+  /lodash@4.17.21:
+    resolution: {integrity: sha512-v2kDEe57lecTulaDIuNTPy3Ry4gLGJ6Z1O3vE1krgXZNrsQ+LFTGHVxVjcXPs17LhbZVGedAJv8XZ1tvj5FvSg==}
     dev: false
 
   /media-typer@0.3.0:
