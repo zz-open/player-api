@@ -1,11 +1,7 @@
 import axios from 'axios'
 
 const instance = axios.create({
-  baseURL: 'https://c6.y.qq.com/',
   timeout: 7000,
-  headers: {
-    referer: 'https://y.qq.com/',
-  },
   withCredentials: true, // `withCredentials` 表示跨域请求时是否需要使用凭证
 });
 

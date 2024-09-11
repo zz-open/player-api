@@ -1,8 +1,8 @@
 import {neteaseRouter} from './netease.js'
-import {qqRouter} from './qq.js'
+import {tecentRouter} from './tecent.js'
 
 export function useAddRouter(app) {
-    const routes = [neteaseRouter, qqRouter]
+    const routes = [neteaseRouter, tecentRouter]
     routes.forEach(route => {
         app.use(route.routes(), route.allowedMethods())
     })

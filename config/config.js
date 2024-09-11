@@ -5,7 +5,7 @@ const defaultConfig = {
     server: {
         port: 3000,
     },
-    qq: {
+    tecent: {
         cookie: '',
         loginUin: '',
         userAgent: 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/127.0.0.0 Safari/537.36'
@@ -23,5 +23,5 @@ async function mergeConfig() {
     return config
 }
 
-const config =await mergeConfig()
-export { config }
+const GLOBAL_CONFIG =await mergeConfig()
+export { GLOBAL_CONFIG }

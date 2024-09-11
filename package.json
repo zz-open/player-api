@@ -30,7 +30,7 @@
     "lodash": "^4.17.21"
   },
   "engines": {
-    "node": ">=16.0.0"
+    "node": ">=18.0.0"
   },
   "devDependencies": {
     "chalk": "^5.3.0"

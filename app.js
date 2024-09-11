@@ -1,7 +1,7 @@
 import Koa from 'koa'
 import chalk from 'chalk'
 import {useAddRouter} from './router/index.js'
-import {config} from './config/index.js'
+import {GLOBAL_CONFIG} from './config/index.js'
 
 const app = new Koa()
 
@@ -10,8 +10,8 @@ function main() {
 
     useAddRouter(app)
     
-    app.listen(config.server.port, () => {
-        console.log(chalk.green(`\n🥳🎉 server running @ http://localhost:${config.server.port} \n`));
+    app.listen(GLOBAL_CONFIG.server.port, () => {
+        console.log(chalk.green(`\n🥳🎉 server running @ http://localhost:${GLOBAL_CONFIG.server.port} \n`));
     })
 }
 
