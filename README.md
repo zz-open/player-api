@@ -27,17 +27,14 @@ pnpm dev
 ```
 项目监听端口是`3678`
 
-### 🐳 Docker
+# 🐳 Docker
 
 ```sh
 docker run -d --name player-api -p 3678:3678 player-api
 ```
 
-# tecent music
-- 需要先登录拿到cookie
-- 还需要QQ号码
+# settings.js
+启动服务之前，按需填入参数
 
-### 功能特性
-- [x] 获取用户歌单列表
-
-# netease music
+# API文档
+[tecent](./docs/tecent.md)

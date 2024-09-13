@@ -84,3 +84,6 @@ config/config-*.js
 
 nohup.out
 
+.DS_Store
+
+logs/

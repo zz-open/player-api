@@ -1,1 +1,0 @@
-export const APPLICATION_CONF_FILENAME = 'application.json';
