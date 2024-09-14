@@ -1,3 +1,4 @@
+import assert from 'assert';
 import { tecentZzcSign } from '../../common/utils/index.js';
 import qs from 'qs'
 

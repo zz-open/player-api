@@ -1,5 +1,5 @@
 import { sendRequest } from '../../common/request/instance.js'
-import { businessFailResponse,successResponse } from '../../common/response/index.js'
+import { businessFailResponse } from '../../common/response/index.js'
 import { getTecentMusicWebApiConfig,isEmpty,resolveMusicVkeyGetVkeyGetUrl } from '../../common/utils/index.js'
 
 
@@ -24,8 +24,8 @@ export async function querySongInfo(params = {}) {
 				"guid": guid(),
 				"songmid": song_mids,
 				"songtype": [0], // 不清楚作用，不修改
-				"uin": global.APPLICATION_CONFIG.tecent.uin,
-				"loginflag": global.APPLICATION_FN.tecent.isLogined() ? 1 : 0,
+				"uin": global.APP_CONF.tecent.uin,
+				"loginflag": global.APP_UTILS.tecent.isLogined() ? 1 : 0,
 				"platform": "20", // 固定值
 			}
 		}

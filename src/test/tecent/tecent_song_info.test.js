@@ -1,4 +1,4 @@
-import '../../config/index.js'
+import '../../global.js'
 import { getTecentMusicWebApiConfig, isEmpty } from '../../common/utils/index.js'
 import axios from 'axios'
 
@@ -13,8 +13,8 @@ async function song_info() {
         "guid": guid(),
         "songmid": ["0015HWfX0EFlfG"],
         "songtype": [0],
-        "uin": global.APPLICATION_CONFIG.tecent.uin,
-        "loginflag": global.APPLICATION_CONFIG.tecent.cookie ? 1 : 0,
+        "uin": global.APP_CONF.tecent.uin,
+        "loginflag": global.APP_CONF.tecent.cookie ? 1 : 0,
         "platform": "20", // 固定值
       }
     }
@@ -43,5 +43,7 @@ describe("tecent_music_api", () => {
     expect(isEmpty(sip)).toBe(false);
     expect(isEmpty(midurlinfo)).toBe(false);
     console.log('midurlinfo:', midurlinfo)
+
+    // 歌曲可能没有版权，所以可能没有purl,vkey
   });
 })

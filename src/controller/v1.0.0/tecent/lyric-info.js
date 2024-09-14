@@ -6,7 +6,7 @@ const handleLyricInfo = async (ctx, next) => {
 	
 	ctx.set('Content-Type', 'text/plain; charset=utf-8');
 	if (!flag) {
-		ctx.body = '暂无歌词内容';
+		ctx.body = res
 		return
 	}
 

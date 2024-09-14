@@ -12,7 +12,7 @@ test:
 	#pnpm jest ./src/__test__/tecent/tecent_lyric_info.test.js
 	pnpm jest ./src/__test__/tecent/tecent_song_info.test.js
 	
-.PHONY:	push upgrade dev
+.PHONY:	push upgrade dev preview ncu
 push:
 	@git add .
 	git commit -m "脚本自动push"
@@ -24,3 +24,9 @@ upgrade:
 
 dev:
 	@pnpm dev
+
+preview:
+	@pnpm preview
+
+ncu:
+	@pnpm ncu -u

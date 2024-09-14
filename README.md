@@ -33,7 +33,7 @@ pnpm dev
 docker run -d --name player-api -p 3678:3678 player-api
 ```
 
-# settings.js
+# .env
 启动服务之前，按需填入参数
 
 # 文档

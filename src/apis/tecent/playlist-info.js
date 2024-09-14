@@ -1,6 +1,6 @@
 import { sendRequest } from '../../common/request/index.js'
-import { businessFailResponse,successResponse } from '../../common/response/index.js'
-import { getTecentMusicWebApiConfig, isEmpty, resolveMusicSrfDissInfoAiDissInfouniformGetDissinfo } from '../../common/utils/index.js'
+import { businessFailResponse } from '../../common/response/index.js'
+import { getTecentMusicWebApiConfig, resolveMusicSrfDissInfoAiDissInfouniformGetDissinfo } from '../../common/utils/index.js'
 
 const songCnt = 1000 // 歌单歌曲数量
 
@@ -9,7 +9,7 @@ const songCnt = 1000 // 歌单歌曲数量
  * @returns 
  */
 export async function queryPlaylistInfo(params = {}) {
-	const {diss_tid = 0, prefixUrl = ''} = params
+	const {diss_tid = 0} = params
 	console.log('params:', params)
 	if (!diss_tid) {
 		return [false, businessFailResponse("歌单id不能为空")]
@@ -48,5 +48,5 @@ export async function queryPlaylistInfo(params = {}) {
 		return [false, res]
 	}
 
-	return resolveMusicSrfDissInfoAiDissInfouniformGetDissinfo(res.data, prefixUrl)
+	return resolveMusicSrfDissInfoAiDissInfouniformGetDissinfo(res.data)
 }

@@ -1,6 +1,6 @@
 import { sendRequest } from '../../common/request/index.js'
-import { businessFailResponse,successResponse } from '../../common/response/index.js'
-import { getTecentMusicWebApiConfig,isEmpty,resolveMusicMusichallSongPlayLyricInfoGetPlayLyricInfor } from '../../common/utils/index.js'
+import { businessFailResponse } from '../../common/response/index.js'
+import { getTecentMusicWebApiConfig, resolveMusicMusichallSongPlayLyricInfoGetPlayLyricInfor } from '../../common/utils/index.js'
 
 /**
  * 查询歌词信息

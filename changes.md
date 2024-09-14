@@ -1,5 +1,8 @@
 # 更新日志
 
+## 2024-09-15
+- 优化: settings.js改为通过环境变量启动
+
 ## 2024-09-14
 - 新增: [tecent] [获取歌曲信息](http://localhost:3678/v1.0.0/tecent/songInfo)
 

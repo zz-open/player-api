@@ -1,4 +1,4 @@
-import '../../config/index.js'
+import '../../global.js'
 import { getTecentMusicWebApiConfig } from '../../common/utils/index.js'
 import axios from 'axios'
 

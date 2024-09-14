@@ -1,7 +1,8 @@
 import { join } from 'path'
 import { format as _format, transports as _transports, createLogger as __createLogger } from 'winston'
 import 'winston-daily-rotate-file'
-import {__dirname} from './path.js'
+import {__dirname} from '../utils/index.js'
+
 //
 // Logging levels
 //
@@ -93,4 +94,4 @@ export { _createLogger as createLogger }
 
 const logger = createLogger('main')
 
-export default logger
+export {logger}

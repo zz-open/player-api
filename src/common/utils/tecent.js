@@ -1,9 +1,9 @@
 import qs from 'qs'
 import url from 'url'
-
-import { tecentZzcSign } from './tecent-sign2.js';
-import {businessFailResponse, successResponse} from '../response/index.js'
 import {isEmpty} from './fn.js'
+import { tecentZzcSign } from './tecent-sign.js';
+import {businessFailResponse, successResponse} from '../response/index.js'
+import {getServerTecentSongUrl, getServerTecentLyricUrl, getServerTecentSongCoverUrl} from './router.js'
 
 export const TECENT_MUSIC_WEB_API_U = 'https://u6.y.qq.com';
 export const TECENT_MUSIC_WEB_API_C = 'https://c6.y.qq.com';
@@ -12,9 +12,10 @@ export const TECENT_MUSIC_WEB_API_BASE_URL = `${TECENT_MUSIC_WEB_API_U}/cgi-bin/
 export const TECENT_MUSIC_WEB_API_COVER_URL = '//y.qq.com/music/photo_new'
 
 
-export function getTecentMusicSongCover({pmid = '', size='300x300', max_age=2592000}) {
-	// y.qq.com/music/photo_new/T002R300x300M000004FKCj71O4Hhz_2.jpg?max_age=2592000
-    return `${TECENT_MUSIC_WEB_API_COVER_URL}/T002R${size}${pmid}.jpg?max_age=${max_age}`
+export function getTecentMusicCover({pmid = '', size='300x300', max_age=2592000}) {
+	// y.qq.com/music/photo_new/T002R300x300M00000119QDk1SkUf7_1.jpg?max_age=2592000
+	// 将来可能会变
+    return `${TECENT_MUSIC_WEB_API_COVER_URL}/T002R${size}M000${pmid}.jpg?max_age=${max_age}`
 }
 
 export function getTecentMusicWebApiRequestBaseUrl(data) {
@@ -33,10 +34,10 @@ export function generateGuid(){
 
 export function getTecentMusicWebApiConfig() {
 	const headers = {
-		Cookie: global.APPLICATION_CONFIG.tecent.cookie,
+		Cookie: global.APP_CONF.tecent.cookie,
 		Referer: 'https://y.qq.com/',
 		Origin: 'https://y.qq.com',
-		'User-Agent': global.APPLICATION_CONFIG.userAgent,
+		'User-Agent': global.APP_CONF.userAgent,
 	}
 
 	const baseApiParams = {
@@ -51,16 +52,18 @@ export function getTecentMusicWebApiConfig() {
 		needNewCode: 1, // 固定
 		g_tk_new_20200303: 802375924, // todo: 不确定		
 	}
-
-	const params1 = {...baseApiParams, ...{hostuin: global.APPLICATION_CONFIG.tecent.uin || '0',}}
-	const params2 = {...baseApiParams}
 	
 	return {
         API_URL_1: `${TECENT_MUSIC_WEB_API_C}/rsc/fcgi-bin/fcg_user_created_diss`,
         API_URL_2: getTecentMusicWebApiRequestBaseUrl,
 		HEARDERS: headers,
-		API_PARAMS_1: params1,
-		API_PARAMS_2: params2,
+		API_PARAMS_1: {
+			...baseApiParams, 
+			hostuin: global.APP_CONF.tecent.uin || '0',
+		},
+		API_PARAMS_2: {
+			...baseApiParams
+		},
 		guid: generateGuid
 	}
 }
@@ -95,7 +98,7 @@ export function resolveMusicVkeyGetVkeyGetUrl(data) {
 			songmid: songmid,
 			vkey: vkey,
 			filename: filename,
-			purl: purl,
+			purl: purl ? purl : '', // 此处需要考虑，有些歌曲没版权，不能播放，平台purl字段为空
 			url: purl ? new url.URL(purl, songHost) : ''
 		}
 	})
@@ -126,13 +129,14 @@ export function resolveMusicVkeyGetVkeyGetUrlWithSingleUrl(data) {
 
 	const songHost = sip[0]
 	const songs = midurlinfo.map((item) => {
-		const {purl} = item
+		// 此处需要考虑，有些歌曲没版权，不能播放，平台purl,vkey字段为空
+		const {purl, vkey} = item
 		return {
-			url: purl ? new url.URL(purl, songHost).toString() : ''
+			url: purl ? new url.URL(purl, songHost).toString() : '',
+			vkey: vkey
 		}
 	})
 
-	
 	baseData.url = !isEmpty(songs) && !isEmpty(songs[0]) ? songs[0].url : ''
 	return [true, successResponse(baseData)]
 }
@@ -165,35 +169,44 @@ export function resolveMusicMusichallSongPlayLyricInfoGetPlayLyricInfor(data) {
 /**
  * 解析平台歌单歌曲列表接口
  */
-export function resolveMusicSrfDissInfoAiDissInfouniformGetDissinfo(data, prefixUrl = '') {
+export function resolveMusicSrfDissInfoAiDissInfouniformGetDissinfo(data) {
 	const {req_2} = data
 	const {code:req_2_code, data:req_2_data, msg:req_2_msg} = req_2
 	if (req_2_code != 0) {
 		return [false, businessFailResponse(req_2_msg, req_2_code)]
 	}
 
+	const {dirinfo, songlist} = req_2_data
+
 	const baseData = {
-		playlist: {}, 			// 歌单信息
-		songs: { 					// 歌曲列表
+		// 设置歌单信息
+		playlist: {
+			id: dirinfo.id,
+			name: dirinfo.title,
+			cover: dirinfo.picurl,
+			song_cnt: dirinfo.songnum,
+			disable_song_cnt: 0
+		},
+		songs: {
 			total: 0,
 			songs: []
 		}
 	}
 
-	const {dirinfo, songlist} = req_2_data
-	// 设置歌单信息
-	baseData.playlist.id = dirinfo.id
-	baseData.playlist.name = dirinfo.title
-	baseData.playlist.cover = dirinfo.picurl
-	baseData.playlist.song_cnt = dirinfo.songnum
-
 	if (isEmpty(songlist)) {
 		return [true, successResponse(baseData)]
 	}
 
+	let disableSongCnt = 0
 	const songList = songlist.map((item) => {
-		const singerNames = item.singer.map((singer) => singer.name).join('/')
+		// todo: 把不能播放的歌曲直接过滤掉，不知道为什么，网页不能播，客户端却能正常播放
+		const {alert: _alert} = item.action
+		const _disabled = !_alert ? true : false
+		if (_disabled) {
+			disableSongCnt += 1
+		}
 
+		const singerNames = item.singer.map((singer) => singer.name).join('/')
 		return {
 			song_id: item.id,
 			song_mid: item.mid,
@@ -202,13 +215,15 @@ export function resolveMusicSrfDissInfoAiDissInfouniformGetDissinfo(data, prefix
 			album: item.album,
 			name: item.name,
 			artist: singerNames,
-			cover: getTecentMusicSongCover({pmid: item.album.pmid}),
-			lrc: new url.URL(`/v1.0.0/tecent/lyricInfo?song_id=${item.id}&song_mid=${item.mid}`, prefixUrl).toString(),
-			url: new url.URL(`/v1.0.0/tecent/songUrl?song_mid=${item.mid}`, prefixUrl).toString(),
+			cover: getServerTecentSongCoverUrl({pmid: item.album.pmid}),
+			lrc: getServerTecentLyricUrl({song_mid: item.mid}),
+			url: getServerTecentSongUrl({song_mid: item.mid}),
+			disable: _disabled
 		}
 	})
 
 	baseData.songs.songs = songList
 	baseData.songs.total = songList.length
+	baseData.playlist.disable_song_cnt = disableSongCnt
 	return [true,successResponse(baseData)]
 }

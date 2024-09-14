@@ -24,8 +24,8 @@ export async function querySongUrl(params = {}) {
 				"guid": guid(),
 				"songmid": [String(song_mid)],
 				"songtype": [0], // 不清楚作用，不修改
-				"uin": global.APPLICATION_CONFIG.tecent.uin,
-				"loginflag": global.APPLICATION_FN.tecent.isLogined() ? 1 : 0,
+				"uin": global.APP_CONF.tecent.uin,
+				"loginflag": global.APP_UTILS.tecent.isLogined() ? 1 : 0,
 				"platform": "20", // 固定值
 			}
 		}
