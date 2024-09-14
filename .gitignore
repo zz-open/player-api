@@ -87,3 +87,4 @@ nohup.out
 .DS_Store
 
 logs/
+koa-starter/
