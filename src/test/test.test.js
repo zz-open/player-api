@@ -1,11 +1,11 @@
-import assert from 'assert';
+import assert from 'node:assert'
 
 function sum(a, b) {
-  return a + b;
+  return a + b
 }
 
-describe("base_test", () => {
-  test('sum', () => {
-    assert.equal(sum(1, 2), 3);
-});
+describe('base_test', () => {
+  it('sum', () => {
+    assert.equal(sum(1, 2), 3)
+  })
 })

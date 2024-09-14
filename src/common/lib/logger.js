@@ -1,7 +1,7 @@
-import { join } from 'path'
-import { format as _format, transports as _transports, createLogger as __createLogger } from 'winston'
+import { join } from 'node:path'
+import { createLogger as __createLogger, format as _format, transports as _transports } from 'winston'
+import { __dirname } from '../utils/index.js'
 import 'winston-daily-rotate-file'
-import {__dirname} from '../utils/index.js'
 
 //
 // Logging levels
@@ -15,7 +15,7 @@ const config = {
     info: 4,
     verbose: 5,
     silly: 6,
-    custom: 7
+    custom: 7,
   },
   colors: {
     error: 'red',
@@ -25,8 +25,8 @@ const config = {
     info: 'green',
     verbose: 'cyan',
     silly: 'magenta',
-    custom: 'yellow'
-  }
+    custom: 'yellow',
+  },
 }
 
 const printfFormat = _format.printf((info) => {
@@ -40,7 +40,7 @@ const printfFormat = _format.printf((info) => {
   return `${timestamp} [${name}] ${colorLevel} ${messageText}`
 })
 
-const createDayTransport = (preName, level = 'info') => {
+function createDayTransport(preName, level = 'info') {
   return new _transports.DailyRotateFile({
     filename: `${preName}-%DATE%.log`,
     datePattern: 'YYYY-MM-DD',
@@ -52,37 +52,37 @@ const createDayTransport = (preName, level = 'info') => {
     format: _format.combine(
       _format.json(),
       _format.timestamp({
-        format: 'YYYY-MM-DD HH:mm:ss'
-      })
+        format: 'YYYY-MM-DD HH:mm:ss',
+      }),
     ),
     createSymlink: true,
     symlinkName: `${preName}.log`,
-    level
+    level,
   })
 }
 
-const createLogger = (name) => {
-  let _logger = new __createLogger({
+function createLogger(name) {
+  const _logger = new __createLogger({
     level: 'info',
     levels: config.levels,
     format: _format.combine(
       _format.json(),
       _format.timestamp({
-        format: 'YYYY-MM-DD HH:mm:ss'
-      })
+        format: 'YYYY-MM-DD HH:mm:ss',
+      }),
     ),
     defaultMeta: { name },
     transports: [
       createDayTransport('info', 'info'),
       createDayTransport('warn', 'warn'),
-      createDayTransport('err', 'error')
-    ]
+      createDayTransport('err', 'error'),
+    ],
   })
 
   _logger.add(
     new _transports.Console({
-      format: printfFormat
-    })
+      format: printfFormat,
+    }),
   )
 
   _logger.info(`${name} 日志服务已启动。`)
@@ -94,4 +94,4 @@ export { _createLogger as createLogger }
 
 const logger = createLogger('main')
 
-export {logger}
+export { logger }

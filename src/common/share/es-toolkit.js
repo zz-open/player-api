@@ -1,1 +1,1 @@
-export {toMerged, pick,omit} from 'es-toolkit'
+export { omit, pick, toMerged } from 'es-toolkit'

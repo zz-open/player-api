@@ -1,6 +1,6 @@
+import process from 'node:process'
+import { logger } from '../common/utils/index.js'
 import { REQUEST_TIME } from '../config/index.js'
-import {logger} from '../common/utils/index.js'
-
 /**
  * Add X-Response-Time header field.
  * @param {Dictionary} options options dictionary. { hrtime }
@@ -11,10 +11,10 @@ import {logger} from '../common/utils/index.js'
  *          Default is `false` to keep back compatible.
  */
 export default (options) => {
-  let hrtime = options && options.hrtime
+  const hrtime = options && options.hrtime
 
   return async (ctx, next) => {
-    let start = process.hrtime()
+    const start = process.hrtime()
     await next()
     let delta = process.hrtime(start)
 
@@ -24,7 +24,7 @@ export default (options) => {
       // truncate to milliseconds.
       delta = Math.round(delta)
     }
-    ctx.set('X-Response-Time', delta + 'ms')
+    ctx.set('X-Response-Time', `${delta}ms`)
 
     logger.info({
       type: REQUEST_TIME,
@@ -32,8 +32,8 @@ export default (options) => {
         ip: ctx.request.ip,
         method: ctx.method,
         path: ctx.path,
-        delta
-      }
+        delta,
+      },
     })
   }
 }

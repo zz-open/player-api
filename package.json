@@ -1,9 +1,29 @@
 {
   "name": "player-api",
+  "type": "module",
   "version": "1.0.0",
   "description": "music api, just only use it myself",
-  "type": "module",
+  "author": "仔仔",
+  "license": "ISC",
+  "homepage": "https://github.com/zz-open/player-api#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/zz-open/player-api.git"
+  },
+  "bugs": {
+    "url": "https://github.com/zz-open/player-api/issues"
+  },
+  "keywords": [
+    "nodejs",
+    "企鹅音乐",
+    "音乐",
+    "网易云音乐",
+    "koa2"
+  ],
   "exports": "./index.js",
+  "engines": {
+    "node": ">=18.0.0"
+  },
   "scripts": {
     "test": "mocha",
     "watch": "pnpm run dev",
@@ -17,29 +37,11 @@
     "upgrade": "npm-check-updates -u",
     "prepare": "if [[ $NODE_ENV != \"production\" ]]; then husky install; fi"
   },
-  "keywords": [
-    "nodejs",
-    "企鹅音乐",
-    "音乐",
-    "网易云音乐",
-    "koa2"
-  ],
-  "author": "仔仔",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/zz-open/player-api/issues"
-  },
-  "homepage": "https://github.com/zz-open/player-api#readme",
-  "repository": {
-    "type": "git",
-    "url": "git+ssh://git@github.com/zz-open/player-api.git"
-  },
   "dependencies": {
     "@jixun/qmweb-sign": "1.0.4",
     "@koa/cors": "^5.0.0",
     "await-to-js": "^3.0.0",
     "axios": "^1.7.7",
-    "babel-plugin-transform-import-meta": "^2.2.1",
     "cross-env": "^7.0.3",
     "dayjs": "^1.11.13",
     "es-toolkit": "^1.19.0",
@@ -51,13 +53,8 @@
     "winston": "^3.14.2",
     "winston-daily-rotate-file": "^5.0.0"
   },
-  "engines": {
-    "node": ">=18.0.0"
-  },
   "devDependencies": {
-    "@babel/core": "^7.25.2",
-    "@babel/plugin-transform-modules-commonjs": "^7.24.8",
-    "@babel/preset-env": "^7.25.4",
+    "@antfu/eslint-config": "^3.6.0",
     "@dotenvx/dotenvx": "^1.14.1",
     "chalk": "^5.3.0",
     "eslint": "^9.10.0",
@@ -66,18 +63,6 @@
     "lint-staged": "^15.2.10",
     "mocha": "^10.7.3",
     "nodemon": "^3.1.4",
-    "npm-check-updates": "^17.1.1",
-    "@antfu/eslint-config": "^3.6.0"
-  },
-  "lint-staged": {
-    "*.{js,mjs}": [
-      "prettier --write",
-      "eslint --cache --fix",
-      "git add"
-    ],
-    "*.{md,html,json}": [
-      "prettier --write",
-      "git add"
-    ]
+    "npm-check-updates": "^17.1.1"
   }
 }

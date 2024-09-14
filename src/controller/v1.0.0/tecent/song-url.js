@@ -1,19 +1,20 @@
 import { querySongUrl } from '../../../apis/tecent/index.js'
-import {businessFailResponse} from '../../../common/response/index.js'
-const handleSongUrl = async (ctx, next) => {
-	const { song_mid = '' } = ctx.request.query;
-	const [flag, res] = await querySongUrl({song_mid})
-	if (!flag) {
-		ctx.body = res
-		return
-	}
+import { businessFailResponse } from '../../../common/response/index.js'
 
-	if (res.data.url) {
-		ctx.redirect(res.data.url)
-		return
-	}
+async function handleSongUrl(ctx, next) {
+  const { song_mid = '' } = ctx.request.query
+  const [flag, res] = await querySongUrl({ song_mid })
+  if (!flag) {
+    ctx.body = res
+    return
+  }
 
-	ctx.body = businessFailResponse("歌曲因版权问题，无法播放")
+  if (res.data.url) {
+    ctx.redirect(res.data.url)
+    return
+  }
+
+  ctx.body = businessFailResponse('歌曲因版权问题，无法播放')
 }
 
-export {handleSongUrl}
+export { handleSongUrl }

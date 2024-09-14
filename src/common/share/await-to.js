@@ -1,1 +1,1 @@
-export {to} from 'await-to-js'
+export { to } from 'await-to-js'

@@ -1,4 +1,4 @@
-import {logger} from '../common/utils/index.js'
+import { logger } from '../common/utils/index.js'
 
 import { CONTROLLER_INFO } from '../config/index.js'
 
@@ -14,8 +14,8 @@ export default (opts) => {
         router: ctx.params,
         query: ctx.query,
         body: ctx.request.body,
-        headers: ctx.headers
-      }
+        headers: ctx.headers,
+      },
     })
 
     await next()
