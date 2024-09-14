@@ -1,21 +1,19 @@
 import qs from 'qs'
 
-import { sendRequest } from '../../common/request/instance.js'
-import { getTecentMusicApiConfig, TECENT_MUSIC_WEB_API_C } from '../../config/index.js'
-import { isEmpty} from '../../common/utils/index.js'
-
-const _baseUrl = `${TECENT_MUSIC_WEB_API_C}/rsc/fcgi-bin/fcg_user_created_diss`
+import { sendRequest } from '../../common/request/index.js'
+import { successResponse } from '../../common/response/index.js'
+import { isEmpty, getTecentMusicWebApiConfig} from '../../common/utils/index.js'
 
 /**
  * 查询用户歌单列表
  * @returns 
  */
 export async function queryUserPlaylist() {
-	const {HEARDERS, PARAMS_1} = getTecentMusicApiConfig()
+	const {API_URL_1, HEARDERS, API_PARAMS_1} = getTecentMusicWebApiConfig()
 	const _t = new Date().getTime()
 	const searchParams = qs.stringify(
 		{
-			...PARAMS_1,
+			...API_PARAMS_1,
 			r: _t,
 			_t: _t,
 			sin: 0,
@@ -25,16 +23,17 @@ export async function queryUserPlaylist() {
 	)
 
 	const requestOptions = {
-		url:`${_baseUrl}?${searchParams}`, 
-		options: { headers: HEARDERS } 
+		url: `${API_URL_1}?${searchParams}`, 
+		options: { 
+			headers: HEARDERS 
+		}
 	}
-
 	const [flag, res] = await sendRequest(requestOptions)
 	if (!flag) {
 		return [false, res]
 	}
 
-	return [true, transform(res.data.data)]
+	return [true, successResponse(transform(res.data.data))]
 }
 
 function transform(data) {

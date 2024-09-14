@@ -1,3 +1,6 @@
+import settingsConfig from '../../settings.js'
+import { toMerged } from '../common/share/index.js'
+
 export const defaultConfig = {
     server: {
         port: 3678,
@@ -11,3 +14,18 @@ export const defaultConfig = {
         cookie: '',
     }
 }
+
+export function initGlobalConfig() {
+    const config = toMerged(defaultConfig, settingsConfig)
+    global.APPLICATION_CONFIG = config
+    global.APPLICATION_FN = {
+        tecent: {
+            isLogined: () => {
+                global.APPLICATION_CONFIG.tecent.cookie ? true : false
+            }
+        }
+       
+    }
+}
+
+initGlobalConfig()

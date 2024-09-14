@@ -1,16 +1,16 @@
 import { sendRequest } from '../../common/request/instance.js'
-import { businessFailResponse,successResponse } from '../../common/response/index.js'
-import { getTecentMusicWebApiConfig,isEmpty,resolveMusicVkeyGetVkeyGetUrl } from '../../common/utils/index.js'
+import { businessFailResponse } from '../../common/response/index.js'
+import { getTecentMusicWebApiConfig,isEmpty,resolveMusicVkeyGetVkeyGetUrlWithSingleUrl } from '../../common/utils/index.js'
 
 
 /**
- * 查询平台歌曲播放地址，支持多个
+ * 查询单首歌曲的播放地址
  * @returns 
  */
-export async function querySongInfo(params = {}) {
+export async function querySongUrl(params = {}) {
 	console.log('params:', params)
-	const {song_mids = []} = params
-	if (isEmpty(song_mids)) {
+	const {song_mid = ''} = params
+	if (isEmpty(song_mid)) {
 		return [false, businessFailResponse("歌曲mid不能为空")]
 	}
 	
@@ -22,7 +22,7 @@ export async function querySongInfo(params = {}) {
 			"method": "GetUrl",
 			"param": {
 				"guid": guid(),
-				"songmid": song_mids,
+				"songmid": [String(song_mid)],
 				"songtype": [0], // 不清楚作用，不修改
 				"uin": global.APPLICATION_CONFIG.tecent.uin,
 				"loginflag": global.APPLICATION_FN.tecent.isLogined() ? 1 : 0,
@@ -45,5 +45,5 @@ export async function querySongInfo(params = {}) {
 		return [false, res]
 	}
 
-	return resolveMusicVkeyGetVkeyGetUrl(res.data)
+	return resolveMusicVkeyGetVkeyGetUrlWithSingleUrl(res.data)
 }
