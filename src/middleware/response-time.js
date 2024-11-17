@@ -1,5 +1,5 @@
 import process from 'node:process'
-import { logger } from '../common/utils/index.js'
+import { logger } from '../common/lib/logger.js'
 import { REQUEST_TIME } from '../config/index.js'
 /**
  * Add X-Response-Time header field.

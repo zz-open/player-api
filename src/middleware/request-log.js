@@ -1,4 +1,4 @@
-import { logger } from '../common/utils/index.js'
+import { logger } from '../common/lib/logger.js'
 
 import { CONTROLLER_INFO } from '../config/index.js'
 
